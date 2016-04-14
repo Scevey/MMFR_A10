@@ -11,6 +11,8 @@ Date: 2015/10
 //System Class
 class MyBoundingSphereClass
 {
+	vector3 color = REWHITE;
+	bool isVisible = true;
 	float m_fRadius = 0.0f; //Radius of the Bounding Sphere
 	matrix4 m_m4ToWorld = IDENTITY_M4; //Matrix that will take us from local to world coordinate
 	vector3 m_v3Center = vector3(0.0f); //Will store the center point of the Sphere Class
@@ -64,15 +66,20 @@ public:
 	OUTPUT: ---
 	*/
 	void SetModelMatrix(matrix4 a_m4ToWorld);
-	
+	void SetColor(vector3 a_Color);
+	void ToggleVisible();
 	/*
 	 GetCenter
 	USAGE: Gets the Bounding Sphere's center in world coordinates
 	ARGUMENTS: ---
 	OUTPUT: vector3 -> Center's of the sphere in world coordinates
 	*/
-	vector3 GetCenterG(void);
-
+	vector3 GetCenter(void);
+	vector3 GetColor(void);
+	vector3 GetMax(void);
+	vector3 GetMin(void);
+	matrix4 GetModelMatrix(void);
+	void UpdatePosition(vector3 a_v3Input);
 	/*
 	 GetRadius
 	USAGE: Gets the Bounding Sphere's radius
@@ -80,7 +87,8 @@ public:
 	OUTPUT: float -> radius of the Bounding Sphere
 	*/
 	float GetRadius(void);
-
+	bool  GetVisibility();
+	
 	/*
 	 IsColliding
 	USAGE: Asks if there is a collision with another Bounding sphere Object
@@ -89,8 +97,6 @@ public:
 	OUTPUT: bool -> check of the collision
 	*/
 	bool IsColliding(MyBoundingSphereClass* const a_pOther);
-
-	matrix4 GetModelMatrix(void);
 	
 private:
 	/*
