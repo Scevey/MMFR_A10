@@ -19,22 +19,8 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
 	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
 
-	std::vector<vector3> vertexList = m_pMeshMngr->GetVertexList("Steve");
-	m_BSC1 = new MyBoundingSphereClass(vertexList);
-
-	m_pSphere1 = new PrimitiveClass();
-	m_fRadius1 = m_BSC1->GetRadius();
-	m_v3Center1 = m_BSC1->GetCenter();
-	m_pSphere1->GenerateSphere(m_fRadius1, 10, REGREEN);
-
-
-	//Creeper
-	vertexList = m_pMeshMngr->GetVertexList("Creeper");
-	m_BSC2 = new MyBoundingSphereClass(vertexList);
-	m_fRadius2 = m_BSC2->GetRadius();
-	m_v3Center2 = m_BSC2->GetCenter();
-	m_pSphere2 = new PrimitiveClass();
-	m_pSphere2->GenerateSphere(m_fRadius2, 10, REGREEN);
+	m_pBox1 = new MyBoundingCubeClass(m_pMeshMngr->GetVertexList("Steve"));
+	m_pBox2 = new MyBoundingCubeClass(m_pMeshMngr->GetVertexList("Creeper"));
 }
 
 void AppClass::Update(void)
@@ -54,44 +40,40 @@ void AppClass::Update(void)
 	//Set the model matrices for both objects and Bounding Spheres
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall), "Steve");
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
-	m_BSC1->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall));
-	m_BSC2->SetModelMatrix(glm::translate(m_v3O2));
-	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
-	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
 
+	m_pBox1->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Steve"));
+	m_pBox2->SetModelMatrix(m_pMeshMngr->GetModelMatrix("Creeper"));
+
+	bool isColliding = m_pBox1->IsColliding(m_pBox2);
+
+	if (isColliding)
+	{
+		m_pMeshMngr->AddCubeToQueue(
+			glm::translate(vector3(m_pBox1->GetCenterG())) *
+			glm::scale(vector3(m_pBox1->GetSize())), RERED, SOLID);
+		m_pMeshMngr->AddCubeToQueue(glm::translate(vector3(m_pBox2->GetCenterG()))  *
+			glm::scale(vector3(m_pBox2->GetSize())), RERED, SOLID);
+	}
+	else
+	{
+		m_pMeshMngr->AddCubeToQueue(
+			glm::translate(vector3(m_pBox1->GetCenterG())) *
+			glm::scale(vector3(m_pBox1->GetSize())), REGREEN, WIRE);
+		m_pMeshMngr->AddCubeToQueue(glm::translate(vector3(m_pBox2->GetCenterG()))  *
+			glm::scale(vector3(m_pBox2->GetSize())), REGREEN, WIRE);
+	}
 	
-
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
 	
-
-	//Collision check goes here
-	
-
-	m_m4Steve = m_pMeshMngr->GetModelMatrix("Steve") * glm::translate(m_v3Center1);
-	if (m_BSC1->GetVisibility()) {
-		if (m_BSC1->IsColliding(m_BSC2))
-			m_pMeshMngr->AddSphereToQueue(m_m4Steve * glm::scale(vector3(m_fRadius1 * 2.0f)), m_BSC1->GetColor(), WIRE);
-		else
-			m_pMeshMngr->AddSphereToQueue(m_m4Steve * glm::scale(vector3(m_fRadius1 * 2.0f)), m_BSC1->GetColor(), WIRE);
-	}
-	m_m4Creeper = m_pMeshMngr->GetModelMatrix("Creeper") * glm::translate(m_v3Center2);
-	if (m_BSC1->IsColliding(m_BSC2))
-		m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BSC2->GetColor(), WIRE);
-	else
-		m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BSC2->GetColor(), WIRE);
-
 	//print info into the console
 	printf("FPS: %d            \r", nFPS);//print the Frames per Second
 	//Print info on the screen
 	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
-	if (m_BSC1->IsColliding(m_BSC2))
-		m_pMeshMngr->PrintLine("They are colliding! >_<", RERED);
-	else
-		m_pMeshMngr->PrintLine("They are not colliding! =)", REGREEN);
+
 	m_pMeshMngr->Print("FPS:");
 	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
 }
@@ -118,8 +100,6 @@ void AppClass::Display(void)
 		break;
 	}
 	
-	
-
 	m_pMeshMngr->Render(); //renders the render list
 
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
@@ -127,28 +107,16 @@ void AppClass::Display(void)
 
 void AppClass::Release(void)
 {
-	if (m_pSphere1 != nullptr)
+	if (m_pBox1 != nullptr)
 	{
-		delete m_pSphere1;
-		m_pSphere1 = nullptr;
+		delete m_pBox1;
+		m_pBox1 = nullptr;
 
 	}
-	if (m_pSphere2 != nullptr)
+	if (m_pBox2 != nullptr)
 	{
-		delete m_pSphere2;
-		m_pSphere2 = nullptr;
-
-	}
-	if (m_BSC1 != nullptr)
-	{
-		delete m_BSC1;
-		m_BSC1 = nullptr;
-
-	}
-	if (m_BSC2 != nullptr)
-	{
-		delete m_BSC2;
-		m_BSC2 = nullptr;
+		delete m_pBox2;
+		m_pBox2 = nullptr;
 
 	}
 	super::Release(); //release the memory of the inherited fields

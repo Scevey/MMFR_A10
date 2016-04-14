@@ -6,8 +6,8 @@ void AppClass::ProcessKeyboard(void)
 
 #pragma region ON PRESS/RELEASE DEFINITION
 	static bool	bLastF1 = false, bLastF2 = false, bLastF3 = false, bLastF4 = false, bLastF5 = false,
-		bLastF6 = false, bLastF7 = false, bLastF8 = false, bLastF9 = false, bLastF10 = false,
-		bLastEscape = false, bLastF = false;
+				bLastF6 = false, bLastF7 = false, bLastF8 = false, bLastF9 = false, bLastF10 = false,
+				bLastEscape = false, bLastF = false;
 #define ON_KEY_PRESS_RELEASE(key, pressed_action, released_action){  \
 			bool pressed = sf::Keyboard::isKeyPressed(sf::Keyboard::key);			\
 			if(pressed){											\
@@ -17,23 +17,23 @@ void AppClass::ProcessKeyboard(void)
 #pragma endregion
 
 #pragma region Modifiers
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
 		bModifier = true;
 #pragma endregion
 
 #pragma region Camera Positioning
-	if (bModifier)
+	if(bModifier)
 		fSpeed *= 10.0f;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		m_pCameraMngr->MoveForward(fSpeed);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		m_pCameraMngr->MoveForward(-fSpeed);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		m_pCameraMngr->MoveSideways(-fSpeed);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		m_pCameraMngr->MoveSideways(fSpeed);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
@@ -46,27 +46,17 @@ void AppClass::ProcessKeyboard(void)
 #pragma region Creeper Control
 	if (bModifier)
 		fSpeed *= 10.0f;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		m_v3O1.x -= 0.1f;
-		m_BSC1->UpdatePosition(m_v3O1);
-	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		m_v3O1.x += 0.1f;
-		m_BSC1->UpdatePosition(m_v3O1);
-	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		m_v3O1.y -= 0.1f;
-		m_BSC1->UpdatePosition(m_v3O1);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
-		m_BSC1->ToggleVisible();
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		m_v3O1.y += 0.1f;
-		m_BSC1->UpdatePosition(m_v3O1);
-	}
 #pragma endregion
 
 #pragma region Other Actions
