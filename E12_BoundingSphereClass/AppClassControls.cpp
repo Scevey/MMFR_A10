@@ -69,6 +69,20 @@ void AppClass::ProcessKeyboard(void)
 	}
 #pragma endregion
 
+#pragma region Vehicle Control
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
+		car->AddForce(vector3(-20.0f, 0.0f, 0.0f));
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+		car->AddForce(vector3(20.0f, 0.0f, 0.0f));
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+		car->AddForce(vector3(0.0f, 20.0f, 0.0f));
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+		car->AddForce(vector3(0.0f, -20.0f, 0.0f));
+#pragma endregion
+
 #pragma region Other Actions
 	ON_KEY_PRESS_RELEASE(Escape, NULL, PostMessage(m_pWindow->GetHandler(), WM_QUIT, NULL, NULL));
 	ON_KEY_PRESS_RELEASE(F1, NULL, m_pCameraMngr->SetCameraMode(CAMPERSP));

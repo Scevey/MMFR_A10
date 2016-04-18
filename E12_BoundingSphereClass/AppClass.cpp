@@ -35,6 +35,9 @@ void AppClass::InitVariables(void)
 	m_v3Center2 = m_BSC2->GetCenter();
 	m_pSphere2 = new PrimitiveClass();
 	m_pSphere2->GenerateSphere(m_fRadius2, 10, REGREEN);
+
+	// Vehicle
+	car = new Vehicle();
 }
 
 void AppClass::Update(void)
@@ -44,6 +47,9 @@ void AppClass::Update(void)
 
 	//Update the mesh manager's time without updating for collision detection
 	m_pMeshMngr->Update();
+
+	// find elapsed time
+	double deltaTime = m_pSystem->LapClock();
 
 	//First person camera movement
 	if (m_bFPC == true)
@@ -59,12 +65,20 @@ void AppClass::Update(void)
 	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
 	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
 
+	// Testing Vehicle code
+
+	// handle Vehicle
+	car->Update(deltaTime);
+
+	m_pMeshMngr->SetModelMatrix(car->GetModelMatrix(), "Steve");
+
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
 
+	/*
 	//Collision check goes here
 	m_m4Steve = m_pMeshMngr->GetModelMatrix("Steve") * glm::translate(m_v3Center1);
 	if (m_BSC1->GetVisibility()) {
@@ -90,6 +104,7 @@ void AppClass::Update(void)
 		m_pMeshMngr->PrintLine("They are not colliding! =)", REGREEN);
 	m_pMeshMngr->Print("FPS:");
 	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
+	*/
 }
 
 void AppClass::Display(void)
@@ -113,8 +128,6 @@ void AppClass::Display(void)
 		m_pMeshMngr->AddGridToQueue(1.0f, REAXIS::XY, REBLUE * 0.75f); //renders the XY grid with a 100% scale
 		break;
 	}
-	
-	
 
 	m_pMeshMngr->Render(); //renders the render list
 
@@ -146,6 +159,11 @@ void AppClass::Release(void)
 		delete m_BSC2;
 		m_BSC2 = nullptr;
 
+	}
+	if (car != nullptr)
+	{
+		delete car;
+		car = nullptr;
 	}
 	super::Release(); //release the memory of the inherited fields
 }
