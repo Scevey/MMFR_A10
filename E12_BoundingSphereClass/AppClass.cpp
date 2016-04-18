@@ -27,10 +27,10 @@ void AppClass::InitVariables(void)
 	m_v3Center1 = m_BSC1->GetCenter();
 	m_pSphere1->GenerateSphere(m_fRadius1, 10, REGREEN);
 
-
 	//Creeper
 	vertexList = m_pMeshMngr->GetVertexList("Creeper");
 	m_BSC2 = new MyBoundingSphereClass(vertexList);
+
 	m_fRadius2 = m_BSC2->GetRadius();
 	m_v3Center2 = m_BSC2->GetCenter();
 	m_pSphere2 = new PrimitiveClass();
@@ -59,18 +59,13 @@ void AppClass::Update(void)
 	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
 	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
 
-	
-
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
-	
 
 	//Collision check goes here
-	
-
 	m_m4Steve = m_pMeshMngr->GetModelMatrix("Steve") * glm::translate(m_v3Center1);
 	if (m_BSC1->GetVisibility()) {
 		if (m_BSC1->IsColliding(m_BSC2))
@@ -86,6 +81,7 @@ void AppClass::Update(void)
 
 	//print info into the console
 	printf("FPS: %d            \r", nFPS);//print the Frames per Second
+
 	//Print info on the screen
 	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
 	if (m_BSC1->IsColliding(m_BSC2))
