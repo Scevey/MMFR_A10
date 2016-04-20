@@ -97,6 +97,7 @@ public:
 	vector3 GetSize(void);
 	matrix4 GetModelMatrix(void);
 	vector3 GetColor(void);
+	void SetColor(vector3);
 	bool GetVisibility(void);
 	void UpdatePosition(vector3 a_v3Input);
 	void ToggleVisible(void);
