@@ -11,6 +11,8 @@ Date: 2015/10
 //System Class
 class MyBoundingCubeClass
 {
+	vector3 color = REWHITE;
+	bool isVisible = true;
 	float m_fRadius = 0.0f; //Radius of the Bounding Cube
 	vector3 m_v3Size = vector3(0.0f);
 	matrix4 m_m4ToWorld = IDENTITY_M4; //Matrix that will take us from local to world coordinate
@@ -93,6 +95,10 @@ public:
 
 	vector3 GetSize(void);
 	matrix4 GetModelMatrix(void);
+	vector3 GetColor(void);
+	bool GetVisibility(void);
+	void UpdatePosition(vector3 a_v3Input);
+	void ToggleVisible(void);
 	
 private:
 	/*

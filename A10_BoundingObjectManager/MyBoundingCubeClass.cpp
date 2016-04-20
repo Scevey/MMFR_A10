@@ -117,3 +117,11 @@ bool MyBoundingCubeClass::IsColliding(MyBoundingCubeClass* const a_pOther)
 	return bAreColliding;
 }
 matrix4 MyBoundingCubeClass::GetModelMatrix(void) { return m_m4ToWorld; }
+vector3 MyBoundingCubeClass::GetColor(void) { return color; }
+bool MyBoundingCubeClass::GetVisibility(void) { return isVisible; }
+void MyBoundingCubeClass::UpdatePosition(vector3 a_v3Input) {
+	return;
+}
+void MyBoundingCubeClass::ToggleVisible(void) {
+	isVisible = !isVisible;
+}
