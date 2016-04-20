@@ -48,24 +48,24 @@ void AppClass::ProcessKeyboard(void)
 		fSpeed *= 10.0f;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		m_v3O1.x -= 0.1f;
-		m_BSC1->UpdatePosition(m_v3O1);
+		m_BCC1->UpdatePosition(m_v3O1);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		m_v3O1.x += 0.1f;
-		m_BSC1->UpdatePosition(m_v3O1);
+		m_BCC1->UpdatePosition(m_v3O1);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
 		m_v3O1.y -= 0.1f;
-		m_BSC1->UpdatePosition(m_v3O1);
+		m_BCC1->UpdatePosition(m_v3O1);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
-		m_BSC1->ToggleVisible();
+		m_BCC1->ToggleVisible();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		m_v3O1.y += 0.1f;
-		m_BSC1->UpdatePosition(m_v3O1);
+		m_BCC1->UpdatePosition(m_v3O1);
 	}
 #pragma endregion
 

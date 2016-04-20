@@ -20,21 +20,22 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
 
 	std::vector<vector3> vertexList = m_pMeshMngr->GetVertexList("Steve");
-	m_BSC1 = new MyBoundingSphereClass(vertexList);
+	m_BCC1 = new MyBoundingCubeClass(vertexList);
 
-	m_pSphere1 = new PrimitiveClass();
-	m_fRadius1 = m_BSC1->GetRadius();
-	m_v3Center1 = m_BSC1->GetCenter();
-	m_pSphere1->GenerateSphere(m_fRadius1, 10, REGREEN);
+	//m_pCube1 = new PrimitiveClass();
+	m_fRadius1 = m_BCC1->GetRadius();
+	m_v3Center1 = m_BCC1->GetCenterG();
+	//m_pCube1->GenerateSphere(m_fRadius1, 10, REGREEN);
+	//m_pCube1->GenerateCube(m_fRadius1 * 2, REGREEN);
 
 	//Creeper
 	vertexList = m_pMeshMngr->GetVertexList("Creeper");
-	m_BSC2 = new MyBoundingSphereClass(vertexList);
+	m_BCC2 = new MyBoundingCubeClass(vertexList);
 
-	m_fRadius2 = m_BSC2->GetRadius();
-	m_v3Center2 = m_BSC2->GetCenter();
-	m_pSphere2 = new PrimitiveClass();
-	m_pSphere2->GenerateSphere(m_fRadius2, 10, REGREEN);
+	m_fRadius2 = m_BCC2->GetRadius();
+	m_v3Center2 = m_BCC2->GetCenterG();
+	//m_pCube2 = new PrimitiveClass();
+	//m_pCube2->GenerateCube(m_fRadius2*2, REGREEN);
 }
 
 void AppClass::Update(void)
@@ -57,8 +58,8 @@ void AppClass::Update(void)
 	//Set the model matrices for both objects and Bounding Spheres
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall), "Steve");
 	m_pMeshMngr->SetModelMatrix(glm::translate(m_v3O2), "Creeper");
-	m_BSC1->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall));
-	m_BSC2->SetModelMatrix(glm::translate(m_v3O2));
+	m_BCC1->SetModelMatrix(glm::translate(m_v3O1) * ToMatrix4(m_qArcBall));
+	m_BCC2->SetModelMatrix(glm::translate(m_v3O2));
 	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
 	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
 
@@ -70,24 +71,24 @@ void AppClass::Update(void)
 
 	//Collision check goes here
 	m_m4Steve = m_pMeshMngr->GetModelMatrix("Steve") * glm::translate(m_v3Center1);
-	if (m_BSC1->GetVisibility()) {
-		if (m_BSC1->IsColliding(m_BSC2))
-			m_pMeshMngr->AddSphereToQueue(m_m4Steve * glm::scale(vector3(m_fRadius1 * 2.0f)), m_BSC1->GetColor(), WIRE);
+	if (m_BCC1->GetVisibility()) {
+		if (m_BCC1->IsColliding(m_BCC2))
+			m_pMeshMngr->AddCubeToQueue(m_m4Steve * glm::scale(vector3(m_fRadius1 * 2.0f)), m_BCC1->GetColor(), WIRE);
 		else
-			m_pMeshMngr->AddSphereToQueue(m_m4Steve * glm::scale(vector3(m_fRadius1 * 2.0f)), m_BSC1->GetColor(), WIRE);
+			m_pMeshMngr->AddCubeToQueue(m_m4Steve * glm::scale(vector3(m_fRadius1 * 2.0f)), m_BCC1->GetColor(), WIRE);
 	}
 	m_m4Creeper = m_pMeshMngr->GetModelMatrix("Creeper") * glm::translate(m_v3Center2);
-	if (m_BSC1->IsColliding(m_BSC2))
-		m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BSC2->GetColor(), WIRE);
+	if (m_BCC1->IsColliding(m_BCC2))
+		m_pMeshMngr->AddCubeToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
 	else
-		m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BSC2->GetColor(), WIRE);
+		m_pMeshMngr->AddCubeToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
 
 	//print info into the console
 	printf("FPS: %d            \r", nFPS);//print the Frames per Second
 
 	//Print info on the screen
 	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
-	if (m_BSC1->IsColliding(m_BSC2))
+	if (m_BCC1->IsColliding(m_BCC2))
 		m_pMeshMngr->PrintLine("They are colliding! >_<", RERED);
 	else
 		m_pMeshMngr->PrintLine("They are not colliding! =)", REGREEN);
@@ -124,28 +125,28 @@ void AppClass::Display(void)
 
 void AppClass::Release(void)
 {
-	if (m_pSphere1 != nullptr)
+	/*if (m_pCube1 != nullptr)
 	{
-		delete m_pSphere1;
-		m_pSphere1 = nullptr;
+		delete m_pCube1;
+		m_pCube1 = nullptr;
 
 	}
-	if (m_pSphere2 != nullptr)
+	if (m_pCube2 != nullptr)
 	{
-		delete m_pSphere2;
-		m_pSphere2 = nullptr;
+		delete m_pCube2;
+		m_pCube2 = nullptr;
+
+	}*/
+	if (m_BCC1 != nullptr)
+	{
+		delete m_BCC1;
+		m_BCC1 = nullptr;
 
 	}
-	if (m_BSC1 != nullptr)
+	if (m_BCC2 != nullptr)
 	{
-		delete m_BSC1;
-		m_BSC1 = nullptr;
-
-	}
-	if (m_BSC2 != nullptr)
-	{
-		delete m_BSC2;
-		m_BSC2 = nullptr;
+		delete m_BCC2;
+		m_BCC2 = nullptr;
 
 	}
 
