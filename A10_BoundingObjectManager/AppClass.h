@@ -20,7 +20,9 @@ class AppClass : public ReEngAppClass
 	PrimitiveClass* m_pCube1 = nullptr;
 	MyBoundingCubeClass* m_BCC1 = nullptr;
 	vector3 m_v3Center1;
-	float m_fRadius1 = 0.0f;
+	float m_fRadius1x = 0.0f;
+	float m_fRadius1y = 0.0f;
+	float m_fRadius1z = 0.0f;
 	matrix4 m_m4Steve;
 
 	PrimitiveClass* m_pCube2 = nullptr;

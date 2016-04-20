@@ -23,7 +23,9 @@ void AppClass::InitVariables(void)
 	m_BCC1 = new MyBoundingCubeClass(vertexList);
 
 	//m_pCube1 = new PrimitiveClass();
-	m_fRadius1 = m_BCC1->GetRadius();
+	m_fRadius1x = m_BCC1->GetRadiusX();
+	m_fRadius1y = m_BCC1->GetRadiusY();
+	m_fRadius1z = m_BCC1->GetRadiusZ();
 	m_v3Center1 = m_BCC1->GetCenterG();
 	//m_pCube1->GenerateSphere(m_fRadius1, 10, REGREEN);
 	//m_pCube1->GenerateCube(m_fRadius1 * 2, REGREEN);
@@ -66,6 +68,8 @@ void AppClass::Update(void)
 	//Adds all loaded instance to the render list
 	m_pMeshMngr->AddInstanceToRenderList("ALL");
 
+	vector3 radii = vector3(m_fRadius1x, m_fRadius1y, m_fRadius1z);
+
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
 
@@ -73,9 +77,9 @@ void AppClass::Update(void)
 	m_m4Steve = m_pMeshMngr->GetModelMatrix("Steve") * glm::translate(m_v3Center1);
 	if (m_BCC1->GetVisibility()) {
 		if (m_BCC1->IsColliding(m_BCC2))
-			m_pMeshMngr->AddCubeToQueue(m_m4Steve * glm::scale(vector3(m_fRadius1 * 2.0f)), m_BCC1->GetColor(), WIRE);
+			m_pMeshMngr->AddCubeToQueue(m_m4Steve * glm::scale(radii*2.0f), m_BCC1->GetColor(), WIRE);
 		else
-			m_pMeshMngr->AddCubeToQueue(m_m4Steve * glm::scale(vector3(m_fRadius1 * 2.0f)), m_BCC1->GetColor(), WIRE);
+			m_pMeshMngr->AddCubeToQueue(m_m4Steve * glm::scale(radii*2.0f), m_BCC1->GetColor(), WIRE);
 	}
 	m_m4Creeper = m_pMeshMngr->GetModelMatrix("Creeper") * glm::translate(m_v3Center2);
 	if (m_BCC1->IsColliding(m_BCC2))

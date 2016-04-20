@@ -13,12 +13,15 @@ class MyBoundingCubeClass
 {
 	vector3 color = REWHITE;
 	bool isVisible = true;
-	float m_fRadius = 0.0f; //Radius of the Bounding Cube
+	float m_fRadiusX = 0.0f; //Radius of the Bounding Cube
+	float m_fRadiusY = 0.0f;
+	float m_fRadiusZ = 0.0f;
 	vector3 m_v3Size = vector3(0.0f);
 	matrix4 m_m4ToWorld = IDENTITY_M4; //Matrix that will take us from local to world coordinate
 	vector3 m_v3Center = vector3(0.0f); //Will store the center point of the Cube Class
 	vector3 m_v3Min = vector3(0.0f); //Will store the minimum vector of the Cube Class
 	vector3 m_v3Max = vector3(0.0f); //Will store the maximum vector of the Cube Class
+
 
 public:
 	/*
@@ -82,7 +85,9 @@ public:
 	ARGUMENTS: ---
 	OUTPUT: float -> radius of the Bounding Cube
 	*/
-	float GetRadius(void);
+	float GetRadiusX(void);
+	float GetRadiusY(void);
+	float GetRadiusZ(void);
 
 	/*
 	 IsColliding

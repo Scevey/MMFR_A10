@@ -2,7 +2,9 @@
 //  MyBoundingCubeClass
 void MyBoundingCubeClass::Init(void)
 {
-	m_fRadius = 0.0f;
+	m_fRadiusX = 0.0f;
+	m_fRadiusY = 0.0f;
+	m_fRadiusZ = 0.0f;
 	m_m4ToWorld = IDENTITY_M4;
 
 	m_v3Center = vector3(0.0f);
@@ -11,7 +13,9 @@ void MyBoundingCubeClass::Init(void)
 }
 void MyBoundingCubeClass::Swap(MyBoundingCubeClass& other)
 {
-	std::swap(m_fRadius, other.m_fRadius);
+	std::swap(m_fRadiusX, other.m_fRadiusX);
+	std::swap(m_fRadiusY, other.m_fRadiusY);
+	std::swap(m_fRadiusZ, other.m_fRadiusZ);
 	std::swap(m_m4ToWorld, other.m_m4ToWorld);
 
 	std::swap(m_v3Center, other.m_v3Center);
@@ -29,7 +33,9 @@ MyBoundingCubeClass::MyBoundingCubeClass(std::vector<vector3> a_lVectorList)
 }
 MyBoundingCubeClass::MyBoundingCubeClass(MyBoundingCubeClass const& other)
 {
-	m_fRadius = other.m_fRadius;
+	m_fRadiusX = other.m_fRadiusX;
+	m_fRadiusY = other.m_fRadiusY;
+	m_fRadiusZ = other.m_fRadiusZ;
 	m_m4ToWorld = other.m_m4ToWorld;
 
 	m_v3Center = other.m_v3Center;
@@ -52,7 +58,9 @@ MyBoundingCubeClass::~MyBoundingCubeClass(){Release();};
 //Accessors
 void MyBoundingCubeClass::SetModelMatrix(matrix4 a_m4ToWorld){ m_m4ToWorld = a_m4ToWorld; }
 vector3 MyBoundingCubeClass::GetCenterG(void){ return vector3(m_m4ToWorld * vector4(m_v3Center, 1.0f)); }
-float MyBoundingCubeClass::GetRadius(void) { return m_fRadius; }
+float MyBoundingCubeClass::GetRadiusX(void) { return m_fRadiusX; }
+float MyBoundingCubeClass::GetRadiusY(void) { return m_fRadiusY; }
+float MyBoundingCubeClass::GetRadiusZ(void) { return m_fRadiusZ; }
 vector3 MyBoundingCubeClass::GetSize(void) { return m_v3Size; };
 matrix4 MyBoundingCubeClass::GetModelMatrix(void) { return m_m4ToWorld; }
 vector3 MyBoundingCubeClass::GetColor(void) { return color; }
@@ -160,11 +168,21 @@ void MyBoundingCubeClass::CalculateBoundingDimensions(std::vector<vector3> a_lVe
 			m_v3Min.z = a_lVectorList[i].z;
 	}
 
-	m_v3Center = (m_v3Max + m_v3Min) / 2.0f;
-	m_fRadius = glm::distance(m_v3Center, m_v3Max);
-	m_v3Size.x = glm::distance(vector3(m_v3Min.x, 0.0, 0.0), vector3(m_v3Max.x, 0.0, 0.0));
-	m_v3Size.y = glm::distance(vector3(0.0, m_v3Min.y, 0.0), vector3(0.0, m_v3Max.y, 0.0));
-	m_v3Size.z = glm::distance(vector3(0.0f, 0.0, m_v3Min.z), vector3(0.0, 0.0, m_v3Max.z));
+	//m_v3Center = (m_v3Max + m_v3Min) / 2.0f;
+	//m_fRadius = glm::distance(m_v3Center, m_v3Max);
+
+	m_v3Center.x = (m_v3Max.x + m_v3Min.x) / 2.0f;
+	m_fRadiusX = glm::distance(m_v3Center.x, m_v3Max.x);
+
+	m_v3Center.y = (m_v3Max.y + m_v3Min.y) / 2.0f;
+	m_fRadiusY = glm::distance(m_v3Center.y, m_v3Max.y);
+
+	m_v3Center.z = (m_v3Max.z + m_v3Min.z) / 2.0f;
+	m_fRadiusZ = glm::distance(m_v3Center.z, m_v3Max.z);
+
+	m_v3Size.x = glm::distance(vector3(m_v3Min.x, 0.0f, 0.0f), vector3(m_v3Max.x, 0.0f, 0.0f));
+	m_v3Size.y = glm::distance(vector3(0.0f, m_v3Min.y, 0.0f), vector3(0.0f, m_v3Max.y, 0.0f));
+	m_v3Size.z = glm::distance(vector3(0.0f, 0.0f, m_v3Min.z), vector3(0.0f, 0.0f, m_v3Max.z));
 }
 void MyBoundingCubeClass::SetColor(vector3 newColor) {
 	color = newColor;
