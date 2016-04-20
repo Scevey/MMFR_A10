@@ -6,7 +6,7 @@ Date: 2015/10
 #define __MYBOUNDINGCubeCLASS_H_
 
 #include "RE\ReEng.h"
-
+#include "MyBoundingSphereClass.h"
 
 //System Class
 class MyBoundingCubeClass
@@ -92,6 +92,7 @@ public:
 	OUTPUT: bool -> check of the collision
 	*/
 	bool IsColliding(MyBoundingCubeClass* const a_pOther);
+	bool IsColliding(MyBoundingSphereClass* const a_pOther);
 
 	vector3 GetSize(void);
 	matrix4 GetModelMatrix(void);
@@ -99,6 +100,8 @@ public:
 	bool GetVisibility(void);
 	void UpdatePosition(vector3 a_v3Input);
 	void ToggleVisible(void);
+	void SetVisibility(bool visibility);
+	void CalculateBoundingDimensions(std::vector<vector3> a_lVectorList);
 	
 private:
 	/*

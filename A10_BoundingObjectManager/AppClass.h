@@ -24,7 +24,7 @@ class AppClass : public ReEngAppClass
 	matrix4 m_m4Steve;
 
 	PrimitiveClass* m_pCube2 = nullptr;
-	MyBoundingCubeClass* m_BCC2 = nullptr;
+	MyBoundingSphereClass* m_BCC2 = nullptr;
 	vector3 m_v3Center2;
 	float m_fRadius2 = 0.0f;
 	matrix4 m_m4Creeper;

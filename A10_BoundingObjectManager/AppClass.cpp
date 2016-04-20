@@ -30,10 +30,10 @@ void AppClass::InitVariables(void)
 
 	//Creeper
 	vertexList = m_pMeshMngr->GetVertexList("Creeper");
-	m_BCC2 = new MyBoundingCubeClass(vertexList);
+	m_BCC2 = new MyBoundingSphereClass(vertexList);
 
 	m_fRadius2 = m_BCC2->GetRadius();
-	m_v3Center2 = m_BCC2->GetCenterG();
+	m_v3Center2 = m_BCC2->GetCenter();
 	//m_pCube2 = new PrimitiveClass();
 	//m_pCube2->GenerateCube(m_fRadius2*2, REGREEN);
 }
@@ -79,9 +79,9 @@ void AppClass::Update(void)
 	}
 	m_m4Creeper = m_pMeshMngr->GetModelMatrix("Creeper") * glm::translate(m_v3Center2);
 	if (m_BCC1->IsColliding(m_BCC2))
-		m_pMeshMngr->AddCubeToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
+		m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
 	else
-		m_pMeshMngr->AddCubeToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
+		m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
 
 	//print info into the console
 	printf("FPS: %d            \r", nFPS);//print the Frames per Second
