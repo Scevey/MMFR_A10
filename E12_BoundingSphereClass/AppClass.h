@@ -29,9 +29,6 @@ class AppClass : public ReEngAppClass
 	float m_fRadius2 = 0.0f;
 	matrix4 m_m4Creeper;
 
-	// Vehicle class
-	Vehicle* car = nullptr;
-
 public:
 	typedef ReEngAppClass super;
 	/*

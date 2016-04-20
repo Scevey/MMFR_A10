@@ -109,7 +109,6 @@ xcopy "$(SolutionDir)include\RE\Shaders" "$(SolutionDir)_Binary\Shaders" /y</Com
     <ClInclude Include="AppClass.h" />
     <ClInclude Include="MyBoundingCubeClass.h" />
     <ClInclude Include="MyBoundingSphereClass.h" />
-    <ClInclude Include="Vehicle.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\res\BTO.rc" />
@@ -120,7 +119,6 @@ xcopy "$(SolutionDir)include\RE\Shaders" "$(SolutionDir)_Binary\Shaders" /y</Com
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyBoundingCubeClass.cpp" />
     <ClCompile Include="MyBoundingSphereClass.cpp" />
-    <ClCompile Include="Vehicle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
