@@ -62,6 +62,9 @@ void AppClass::ProcessKeyboard(void)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
 		m_BCC1->ToggleVisible();
+		//banana
+		m_BOM->ToggleVisibility();
+		
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		m_v3O1.y += 0.1f;

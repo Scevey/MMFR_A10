@@ -24,6 +24,8 @@ public:
 	void UpdateBoundingObject(std::vector<vector3> a_lVectorList, int a_index); // not sure how the motion will be handled in this method
 	void CheckCollisions();
 
+	void ToggleVisibility(void);
+
 };
 
 #endif //__MYBOUNDINGOBJECTMANAGER_H__

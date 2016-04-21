@@ -19,8 +19,12 @@ void AppClass::InitVariables(void)
 	m_pMeshMngr->LoadModel("Minecraft\\Steve.obj", "Steve");
 	m_pMeshMngr->LoadModel("Minecraft\\Creeper.obj", "Creeper");
 
+	m_BOM = new MyBoundingObjectManager(); // banana
+
 	std::vector<vector3> vertexList = m_pMeshMngr->GetVertexList("Steve");
 	m_BCC1 = new MyBoundingCubeClass(vertexList);
+
+	m_BOM->AddBoundingObject(vertexList); // banana
 
 	//m_pCube1 = new PrimitiveClass();
 	m_fRadius1x = m_BCC1->GetRadiusX();
@@ -34,10 +38,16 @@ void AppClass::InitVariables(void)
 	vertexList = m_pMeshMngr->GetVertexList("Creeper");
 	m_BCC2 = new MyBoundingSphereClass(vertexList);
 
+	m_BOM->AddBoundingObject(vertexList); // banana
+
 	m_fRadius2 = m_BCC2->GetRadius();
 	m_v3Center2 = m_BCC2->GetCenter();
 	//m_pCube2 = new PrimitiveClass();
 	//m_pCube2->GenerateCube(m_fRadius2*2, REGREEN);
+
+	
+
+
 }
 
 void AppClass::Update(void)
@@ -86,6 +96,9 @@ void AppClass::Update(void)
 		m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
 	else
 		m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
+
+	//banana
+	m_BOM->CheckCollisions();
 
 	//print info into the console
 	printf("FPS: %d            \r", nFPS);//print the Frames per Second
