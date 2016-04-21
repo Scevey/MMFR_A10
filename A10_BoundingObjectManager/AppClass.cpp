@@ -83,19 +83,22 @@ void AppClass::Update(void)
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
 
-	//Collision check goes here
-	m_m4Steve = m_pMeshMngr->GetModelMatrix("Steve") * glm::translate(m_v3Center1);
-	if (m_BCC1->GetVisibility()) {
-		if (m_BCC1->IsColliding(m_BCC2))
-			m_pMeshMngr->AddCubeToQueue(m_m4Steve * glm::scale(radii*2.0f), m_BCC1->GetColor(), WIRE);
-		else
-			m_pMeshMngr->AddCubeToQueue(m_m4Steve * glm::scale(radii*2.0f), m_BCC1->GetColor(), WIRE);
-	}
-	m_m4Creeper = m_pMeshMngr->GetModelMatrix("Creeper") * glm::translate(m_v3Center2);
-	if (m_BCC1->IsColliding(m_BCC2))
-		m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
-	else
-		m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
+	////Collision check goes here
+	//m_m4Steve = m_pMeshMngr->GetModelMatrix("Steve") * glm::translate(m_v3Center1);
+	//if (m_BCC1->GetVisibility()) {
+	//	if (m_BCC1->IsColliding(m_BCC2))
+	//		m_pMeshMngr->AddCubeToQueue(m_m4Steve * glm::scale(radii*2.0f), m_BCC1->GetColor(), WIRE);
+	//	else
+	//		m_pMeshMngr->AddCubeToQueue(m_m4Steve * glm::scale(radii*2.0f), m_BCC1->GetColor(), WIRE);
+	//}
+	//m_m4Creeper = m_pMeshMngr->GetModelMatrix("Creeper") * glm::translate(m_v3Center2);
+	//if (m_BCC1->IsColliding(m_BCC2))
+	//	m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
+	//else
+	//	m_pMeshMngr->AddSphereToQueue(m_m4Creeper * glm::scale(vector3(m_fRadius2 * 2.0f)), m_BCC2->GetColor(), WIRE);
+
+	m_BOM->RenderBoundingObject(m_pMeshMngr, "Steve", radii, 0);
+	m_BOM->RenderBoundingObject(m_pMeshMngr, "Creeper", m_fRadius2, 1);
 
 	//banana
 	m_BOM->CheckCollisions();

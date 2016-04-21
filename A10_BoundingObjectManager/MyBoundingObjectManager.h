@@ -19,7 +19,8 @@ public:
 	void SetVisibility(int a_index, bool a_visible); 
 	void SetColor(int a_index, vector3 a_color);
 	int GetCount(void);
-	void RenderBoundingObject(MeshManagerSingleton* a_meshMngr, int a_index);
+	void RenderBoundingObject(MeshManagerSingleton* a_meshMngr, String id, vector3 radius, int a_index);
+	void RenderBoundingObject(MeshManagerSingleton* a_meshMngr, String id, float radius, int a_index);
 	void RenderAll(void);
 	void UpdateBoundingObject(std::vector<vector3> a_lVectorList, int a_index); // not sure how the motion will be handled in this method
 	void CheckCollisions();

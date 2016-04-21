@@ -46,13 +46,34 @@ int MyBoundingObjectManager::GetCount(void)
 	return m_lObjects.size();
 }
 
-void MyBoundingObjectManager::RenderBoundingObject(MeshManagerSingleton* a_meshMngr, int a_index)
+//cubes
+void MyBoundingObjectManager::RenderBoundingObject(MeshManagerSingleton* a_meshMngr, String id, vector3 radius, int a_index)
 {
 	// syntax for adding a single bounding box to mesh manager
-	/*if (cube) {
-		a_meshMngr->AddCubeToQueue(m_lObjects[a_index]);
+	vector3 centerTemp = m_lObjects[a_index]->GetCenterG();
+	matrix4 m_m4Temp = a_meshMngr->GetModelMatrix(id) * glm::translate(centerTemp);
+
+	if (m_lObjects[a_index]->GetVisibility()) {
+		a_meshMngr->AddCubeToQueue(m_m4Temp * glm::scale(radius*2.0f), m_lObjects[a_index]->GetColor(), WIRE);
 	}
-	a_meshMngr->Render();*/
+
+
+}
+
+//spheres
+void MyBoundingObjectManager::RenderBoundingObject(MeshManagerSingleton* a_meshMngr, String id, float radius, int a_index)
+{
+	// syntax for adding a single bounding box to mesh manager
+	vector3 centerTemp = m_lObjects[a_index]->GetCenterG();
+	matrix4 m_m4Temp = a_meshMngr->GetModelMatrix(id) * glm::translate(centerTemp);
+
+	if (m_lObjects[a_index]->GetVisibility()) {
+		vector3 centerTemp = m_lObjects[a_index]->GetCenterG();
+		matrix4 m_m4Temp = a_meshMngr->GetModelMatrix(id) * glm::translate(centerTemp);
+		a_meshMngr->AddSphereToQueue(m_m4Temp * glm::scale(vector3(radius * 2.0f)), m_lObjects[a_index]->GetColor(), WIRE);
+	}
+
+
 }
 
 void MyBoundingObjectManager::RenderAll(void)
