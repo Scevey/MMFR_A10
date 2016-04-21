@@ -6,7 +6,7 @@ Team: Mighty Morphing Flower Arrangers
 Workload:
 Giallella, Anthony:
 John, Justin:
-Lampanaro, Paul:
+Lampanaro, Paul: Created Bounding Object Manager and implemented 75% of functionality.
 Lauren-Alexandra Stapleford:
 Teixeira, Mike:
 ----------------------------------------------
